@@ -54,6 +54,15 @@ ALL Messages Will Displayed
 
 **Messaging Related Routes Are Only Allowed For Authenticated Users**
 
+# Delete a Message
+
+``` GET /api/messages/{ID}```
+
+Message With Given {ID} get  Deleted
+
+*****
+
+
 
 
 
