@@ -38,19 +38,25 @@ class RegisterAPIView(APIView):
 
 
 class MessageAPIView(APIView):
-
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
         data = Message.objects.all()
         print(data)
-        serializer = MessageSerializer(data=data)
-        serializer.is_valid()
+        serializer = MessageSerializer(data=data, many=True)
+        serializer.is_valid(raise_exception=False)
         print(serializer.data)
         return Response(serializer.data)
     def post(self, request):
-        # permission_classes = (IsAuthenticated)
-        serializer = MessageSerializer(data=request.data)
+        print(request.data)
+        serializer = MessageSerializer(data={**request.data,"sender":request.user.username})
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
-        return Response(status=status.HTTP_201_CREATED)
+        serializer.save()
+        return Response({'message':'Message Sent'} ,status=status.HTTP_201_CREATED)
+
+    def delete(self,request):
+        id =request.query_params.get('id')
+        Message.objects.filter(id=id).delete()
+        return Response({'message':'Message Deleted'},status=status.HTTP_201_CREATED)
+
 
 
