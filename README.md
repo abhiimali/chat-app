@@ -56,7 +56,7 @@ ALL Messages Will Displayed
 
 # Delete a Message
 
-``` GET /api/messages/{ID}```
+``` DELETE /api/messages/{ID}```
 
 Message With Given {ID} get  Deleted
 
