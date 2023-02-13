@@ -8,18 +8,20 @@ from rest_framework import status
 from .serializers import RegisterSerializer , MessageSerializer
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated , AllowAny
 from .models import Message
 # Create your views here.
 
-class apiApiView(LoginRequiredMixin,APIView):
+class apiApiView(APIView):
+    # authentication_classes = [AllowAny]
+    permission_classes = []
     def get(self,request):
         return Response({ 'Message' :' Signup Api Made By Abhijit Mali '})
 
 
         
 class RegisterAPIView(APIView):
-
+    permission_classes = []
     def get(self,request):
         return Response({'Message':'This is get method of signup API'},status=status.HTTP_200_OK)
 
