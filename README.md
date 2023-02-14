@@ -51,7 +51,7 @@ Only Needed Parameter Is ```message``
 ALL Messages Will Displayed 
 
 *****
-# Get All Messages 
+# Get Single  Messages using ID  
 
 ``` GET /api/messages/?id={ID}```
 
