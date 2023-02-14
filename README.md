@@ -51,14 +51,19 @@ Only Needed Parameter Is ```message``
 ALL Messages Will Displayed 
 
 *****
+# Get All Messages 
 
-**Messaging Related Routes Are Only Allowed For Authenticated Users**
+``` GET /api/messages/?id={ID}```
+
+*****
+Messaging Related Routes Are Only Allowed For Authenticated Users**
+*****
 
 # Delete a Message
 
 ``` DELETE /api/messages/{ID}```
 
-Message With Given {ID} get  Deleted
+Message With Given {ID} get  Deleted And Only Person Who sent it is able to delete Message 
 
 *****
 
