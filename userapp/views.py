@@ -42,14 +42,22 @@ class RegisterAPIView(APIView):
 class MessageAPIView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request):
+        # print(pk)
         data = Message.objects.all()
-        print(data)
-        serializer = MessageSerializer(data=data, many=True)
+        id = request.query_params.get('id')
+        if id is not None:
+            data = Message.objects.filter(id=id).first()
+            # print(data)
+            serializer = MessageSerializer(data)
+            return Response(serializer.data)
+        else:
+            serializer = MessageSerializer(data=data, many=True)
+
+        
         serializer.is_valid(raise_exception=False)
-        print(serializer.data)
+        # print(serialize.id)
         return Response(serializer.data)
     def post(self, request):
-        print(request.data)
         serializer = MessageSerializer(data={**request.data,"sender":request.user.username})
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -57,8 +65,20 @@ class MessageAPIView(APIView):
 
     def delete(self,request):
         id =request.query_params.get('id')
+        message = Message.objects.filter(id=id).first()
+        print(message.sender)
+        print(request.user)
+        if message.sender != request.user:
+            return Response({'message':'insuffiecient permission'},status=status.HTTP_401_UNAUTHORIZED)
         Message.objects.filter(id=id).delete()
         return Response({'message':'Message Deleted'},status=status.HTTP_201_CREATED)
+
+    '''
+    
+    edited get request in a such way that we can delete using single id also
+    edited delete request and ADDED one more validation check
+    
+    '''
 
 
 
